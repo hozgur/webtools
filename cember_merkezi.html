@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Çember Merkezi Bul</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #sonuc {
+      margin-top: 20px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>3 Noktadan Çember Merkezi Bul</h1>
+
+  <label>Nokta 1: (x₁, y₁)</label>
+  <input type="number" id="x1" placeholder="x1">
+  <input type="number" id="y1" placeholder="y1">
+
+  <label>Nokta 2: (x₂, y₂)</label>
+  <input type="number" id="x2" placeholder="x2">
+  <input type="number" id="y2" placeholder="y2">
+
+  <label>Nokta 3: (x₃, y₃)</label>
+  <input type="number" id="x3" placeholder="x3">
+  <input type="number" id="y3" placeholder="y3">
+
+  <button onclick="hesapla()">Hesapla</button>
+
+  <div id="sonuc"></div>
+
+  <script>
+    function hesapla() {
+      const x1 = parseFloat(document.getElementById('x1').value);
+      const y1 = parseFloat(document.getElementById('y1').value);
+      const x2 = parseFloat(document.getElementById('x2').value);
+      const y2 = parseFloat(document.getElementById('y2').value);
+      const x3 = parseFloat(document.getElementById('x3').value);
+      const y3 = parseFloat(document.getElementById('y3').value);
+
+      const A = x1 * (y2 - y3) - y1 * (x2 - x3) + x2 * y3 - x3 * y2;
+      if (A === 0) {
+        document.getElementById('sonuc').innerHTML = "<b>Üç nokta aynı doğru üzerinde olamaz!</b>";
+        return;
+      }
+
+      const x1Sq = x1 * x1 + y1 * y1;
+      const x2Sq = x2 * x2 + y2 * y2;
+      const x3Sq = x3 * x3 + y3 * y3;
+
+      const D = 2 * (x1*(y2 - y3) + x2*(y3 - y1) + x3*(y1 - y2));
+      const Ux = ((x1Sq)*(y2 - y3) + (x2Sq)*(y3 - y1) + (x3Sq)*(y1 - y2)) / D;
+      const Uy = ((x1Sq)*(x3 - x2) + (x2Sq)*(x1 - x3) + (x3Sq)*(x2 - x1)) / D;
+
+      const r = Math.sqrt((x1 - Ux)**2 + (y1 - Uy)**2);
+
+      document.getElementById('sonuc').innerHTML = `
+        <b>Merkez:</b> (${Ux.toFixed(4)}, ${Uy.toFixed(4)})<br>
+        <b>Yarıçap:</b> ${r.toFixed(4)}
+      `;
+    }
+  </script>
+</body>
+</html>
